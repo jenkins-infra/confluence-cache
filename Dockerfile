@@ -7,6 +7,7 @@ RUN apt-get update \
     && echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
 ADD site.conf /etc/nginx/sites-enabled/default
+ADD cache.conf /etc/nginx/conf.d/cache.conf
 
 WORKDIR /etc/nginx
 VOLUME ["/cache"]
