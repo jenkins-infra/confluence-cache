@@ -9,5 +9,6 @@ RUN apt-get update \
 ADD site.conf /etc/nginx/sites-enabled/default
 
 WORKDIR /etc/nginx
+VOLUME ["/cache"]
 CMD ["nginx"]
 EXPOSE 8080
