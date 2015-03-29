@@ -1,6 +1,9 @@
 FROM ubuntu:14.04
 MAINTAINER Jenkins Infra team <infra@lists.jenkins-ci.org>
 
+# Where to proxy the request to?
+ENV TARGET http://backend:8080/
+
 RUN apt-get update \
     && apt-get install -y nginx \
     && rm -rf /var/lib/apt/lists/* \
