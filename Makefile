@@ -18,9 +18,20 @@ push :
 # access http://localhost:8081/ to go through nginx
 # "http://localhost:8081/display/hello" should be cached
 test: image cache
-	@docker inspect mock-webapp > /dev/null 2>&1 || docker run -d --name=mock-webapp -P -i -t jenkinsciinfra/mock-webapp
+	# start the fresh backend
+	@docker kill backend > /dev/null 2>&1
+	@docker rm backend > /dev/null 2>&1
+	rm -rf build/wwwroot > /dev/null || true
+	mkdir build
+	cp -R test/wwwroot build/
+	docker run -d --name=backend -v `pwd`/build/wwwroot:/usr/share/nginx/html:ro nginx
+
+	# start the cache
 	@docker kill cc > /dev/null 2>&1 || true
-	docker run --rm -p 8081:8080 -t -i --name=cc -v `pwd`/cache:/cache --link mock-webapp:backend jenkinsciinfra/confluence-cache
+	docker run --rm -p 8081:8080 -t -i --name=cc -v `pwd`/cache:/cache --link backend:backend jenkinsciinfra/confluence-cache
+
+	# run the test
+	
 
 cache:
 	mkdir -p cache/display
