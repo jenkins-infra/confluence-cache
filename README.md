@@ -21,7 +21,7 @@ To specify the URL of Confluence, use the `TARGET` environment variable, such as
 If your backend runs in another container, the easiest way to do it is by linking container, such as
  `--link=myConfluenceContainerName:backend -e TARGET=http://backend:8080` 
 
-## How to develop this container
+## How to develop the container
 Run `make image` to build the container. Run `make test` to build the container and then run tests
 against it. Tests start another nginx container as the backend to verify the behaviour of the cache.
 
