@@ -18,7 +18,7 @@ node('docker') {
     def imageTag = "build${shortCommit}"
 
     stage 'Build Container'
-    def whale = docker.build("${imageName}:${imageTag}")
+    def whale = docker.build("${imageName}:${imageTag}", '--no-cache --rm .')
 
     stage 'Deploy'
     whale.push()
